@@ -8,6 +8,14 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        cabinet: ['var(--font-cabinet)'],
+        satoshi: ['var(--font-satoshi)']
+      },
+      colors: {
+        foreground: "#ffffff",
+        accent: "#606060"
+      },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
         'gradient-conic':
