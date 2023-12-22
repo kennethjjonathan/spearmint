@@ -13,8 +13,9 @@ const config: Config = {
         satoshi: ['var(--font-satoshi)']
       },
       colors: {
+        primary: "#000000",
         foreground: "#ffffff",
-        accent: "#606060"
+        accent: "#606060",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
