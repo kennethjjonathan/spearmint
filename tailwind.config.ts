@@ -7,6 +7,12 @@ const config: Config = {
     './src/app/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: "2rem"
+      }
+    },
     extend: {
       fontFamily: {
         cabinet: ['var(--font-cabinet)'],

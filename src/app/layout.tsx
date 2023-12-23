@@ -40,7 +40,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${cabinetGrotesk.variable} font-cabinet ${satoshi.variable}`}>{children}</body>
+      <body className={`${cabinetGrotesk.variable} font-cabinet text-foreground ${satoshi.variable}`}>{children}</body>
     </html>
   )
 }
