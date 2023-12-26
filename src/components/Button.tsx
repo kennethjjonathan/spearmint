@@ -8,7 +8,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         primary:
-          "bg-foreground text-primary lg:hover:text-foreground before:bg-primary border-foreground",
+          "bg-foreground text-primary lg:hover:text-foreground before:bg-primary border-foreground active:text-foreground",
       },
       size: {
         lg: "text-lg py-1 px-2 lg:text-xl"
