@@ -2,7 +2,10 @@
 import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { InputWithLabel } from "@/components/InputWithLabel";
+import useToast from "@/hooks/useToast";
+import { supabase } from "@/lib/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { AuthApiError } from '@supabase/supabase-js';
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -15,9 +18,18 @@ const signInSchema = z.object({
 const SignInPage = () => {
   const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<z.infer<typeof signInSchema>>({ resolver: zodResolver(signInSchema)})
 
-  const onSubmit = async (data: z.infer<typeof signInSchema>) => {
-    console.log(data)
+  const onSubmit = async (formData: z.infer<typeof signInSchema>) => {
+    try {
+      const { error } = await supabase.auth.signInWithPassword({
+        email: formData.email,
+        password: formData.password,
+      })
+      if (error) throw error
+    } catch (error: unknown) {
+      if (error instanceof AuthApiError) useToast(error.message)
+    }
   }
+
   return (
     <div className="container flex h-screen w-full flex-col items-center justify-center space-y-5">
       <div className="w-full space-y-5">
