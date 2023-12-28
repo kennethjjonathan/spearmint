@@ -17,7 +17,7 @@ const cabinetGrotesk = localFont({
   ],
   display: "swap",
   style: "normal",
-  variable: "--font-cabinet",
+  variable: "--font-cabinet"
 });
 
 const satoshi = localFont({
@@ -50,9 +50,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${cabinetGrotesk.variable} font-cabinet text-foreground ${satoshi.variable}`}
+        className={`${cabinetGrotesk.variable} font-satoshi text-foreground ${satoshi.variable}`}
       >
-        {children}{" "}
+        {children}
         <Toaster
           toastOptions={{
             style: { background: "#ffffff", color: "#000000", fontFamily: 'var(--font-satoshi)', borderColor: "#000000" },

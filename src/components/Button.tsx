@@ -4,7 +4,7 @@ import * as React from "react";
 import { SpinnerLoader } from "./SpinnerLoader";
 
 const buttonVariants = cva(
-  "duration-300 flex justify-center items-center disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden border z-0 relative rounded-lg before:absolute before:w-full before:left-0 before:h-full before:-z-10 before:rounded-lg before:top-full before:duration-300 enabled:lg:hover:before:top-0 enabled:active:before:top-0 font-satoshi",
+  "duration-300 flex justify-center items-center disabled:cursor-not-allowed disabled:opacity-50 overflow-hidden border z-0 relative rounded-lg before:absolute before:w-full before:left-0 before:h-full before:-z-10 before:rounded-lg before:top-full before:duration-300 enabled:lg:hover:before:top-0 enabled:active:before:top-0",
   {
     variants: {
       variant: {

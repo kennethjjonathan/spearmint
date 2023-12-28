@@ -15,7 +15,7 @@ const InputPassword = React.forwardRef<HTMLInputElement, InputPasswordProps>(
       setIsShown((prev) => !prev);
     }
     return (
-      <div className="flex flex-col items-start gap-2 font-satoshi">
+      <div className="flex flex-col items-start gap-2">
         <InputWithLabel
           label={label}
           type={isShown ? "text" : "password"}
