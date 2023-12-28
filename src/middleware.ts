@@ -1,7 +1,6 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import CONSTANTS from "./constants/constants";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -17,7 +16,7 @@ export async function middleware(req: NextRequest) {
       req.nextUrl.pathname.startsWith("/signup"))
   ) {
     return NextResponse.redirect(
-      new URL(`${CONSTANTS.WEB_URL}`, req.url),
+      new URL(`/`, req.url),
     );
   }
   return res;
