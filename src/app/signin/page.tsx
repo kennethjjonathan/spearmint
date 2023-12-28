@@ -2,7 +2,7 @@
 import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { InputWithLabel } from "@/components/InputWithLabel";
-import useToast from "@/hooks/useToast";
+import { handleError } from "@/lib/handleError";
 import { supabase } from "@/lib/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthApiError } from '@supabase/supabase-js';
@@ -29,7 +29,7 @@ const SignInPage = () => {
       if (error) throw error
       router.replace("/")
     } catch (error: unknown) {
-      if (error instanceof AuthApiError) useToast(error.message)
+      if (error instanceof AuthApiError) handleError(error.message)
     }
   }
 

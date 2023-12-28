@@ -20,7 +20,6 @@ export async function middleware(req: NextRequest) {
       new URL(`${CONSTANTS.WEB_URL}`, req.url),
     );
   }
-  console.log(session)
   return res;
 }
 

@@ -2,7 +2,7 @@
 import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { InputWithLabel } from "@/components/InputWithLabel";
-import useToast from "@/hooks/useToast";
+import { handleError } from "@/lib/handleError";
 import { supabase } from "@/lib/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthApiError } from "@supabase/supabase-js";
@@ -52,7 +52,7 @@ const SignUpPage = () => {
       setIsEmailSent(true);
     } catch (error: unknown) {
       console.error(error)
-      if (error instanceof AuthApiError) useToast(error.message);
+      if (error instanceof AuthApiError) handleError(error.message);
     }
   };
   return (
