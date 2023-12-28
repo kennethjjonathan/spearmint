@@ -7,6 +7,7 @@ import { supabase } from "@/lib/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthApiError } from '@supabase/supabase-js';
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -16,6 +17,7 @@ const signInSchema = z.object({
 })
 
 const SignInPage = () => {
+  const router = useRouter();
   const {register, handleSubmit, formState: {errors, isSubmitting}} = useForm<z.infer<typeof signInSchema>>({ resolver: zodResolver(signInSchema)})
 
   const onSubmit = async (formData: z.infer<typeof signInSchema>) => {
@@ -25,6 +27,7 @@ const SignInPage = () => {
         password: formData.password,
       })
       if (error) throw error
+      router.replace("/")
     } catch (error: unknown) {
       if (error instanceof AuthApiError) useToast(error.message)
     }
@@ -33,8 +36,8 @@ const SignInPage = () => {
   return (
     <div className="container flex h-screen w-full flex-col items-center justify-center space-y-5">
       <div className="w-full space-y-5">
-        <h1 className="text-center text-3xl font-bold lg:text-4xl">Sign In</h1>
-        <p className="text-center font-satoshi text-accent lg:text-lg">
+        <h1 className="text-center text-3xl font-bold lg:text-4xl font-cabinet">Sign In</h1>
+        <p className="text-center text-accent lg:text-lg">
           Don&apos;t have an account?{" "}
           <Link
             href={"/signup"}
@@ -51,6 +54,9 @@ const SignInPage = () => {
           type="email"
           className="lg:text-lg"
           id="signin-email"
+          isError={errors.email}
+          errorMessage={errors.email?.message}
+          disabled={isSubmitting}
         />
         <InputPassword
           {...register("password")}
@@ -58,9 +64,12 @@ const SignInPage = () => {
           id="password"
           idForShowPassword="signin-password"
           className="lg:text-lg"
+          isError={errors.password}
+          errorMessage={errors.password?.message}
+          disabled={isSubmitting}
         />
         <div className="pt-3">
-          <Button className="w-full" type="submit" size={"lg"}>
+          <Button isLoading={isSubmitting} className="w-full" type="submit" size={"lg"}>
             Sign In
           </Button>
         </div>

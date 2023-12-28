@@ -1,6 +1,7 @@
 import { createMiddlewareClient } from "@supabase/auth-helpers-nextjs";
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
+import CONSTANTS from "./constants/constants";
 
 export async function middleware(req: NextRequest) {
   const res = NextResponse.next();
@@ -9,7 +10,17 @@ export async function middleware(req: NextRequest) {
   const supabase = createMiddlewareClient({ req, res });
 
   // Refresh session if expired - required for Server Components
-  await supabase.auth.getSession();
+  const {data: {session}} = await supabase.auth.getSession();
+  if (
+    session &&
+    (req.nextUrl.pathname.startsWith("/signin") ||
+      req.nextUrl.pathname.startsWith("/signup"))
+  ) {
+    return NextResponse.redirect(
+      new URL(`${CONSTANTS.WEB_URL}`, req.url),
+    );
+  }
+  console.log(session)
   return res;
 }
 
