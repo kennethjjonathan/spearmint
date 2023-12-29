@@ -14,6 +14,27 @@ const config: Config = {
       }
     },
     extend: {
+      animation: {
+        bottom_reveal: "bottom_reveal 1s ease-in-out 1",
+        reveal_react: "reveal_react 2s ease-in-out 1",
+        late_reveal: "late_reveal 2s ease-in-out 1"
+      },
+      keyframes: {
+        bottom_reveal: {
+          "0%": {transform: "translateY(100%)"},
+          "100%": {transform: "translateY(0%)"}
+        },
+        reveal_react: {
+          "0%": {transform: "translateY(100%)"},
+          "50%": {transform: "translateY(100%)"},
+          "100%": {transform: "translateY(0%)"}
+        },
+        late_reveal: {
+          "0%": {transform: "translateY(100%)", opacity: "0"},
+          "50%": {transform: "translateY(100%)", opacity: "0"},
+          "100%": {transform: "translateY(0%)", opacity: "1"}
+        }
+      },
       fontFamily: {
         cabinet: ['var(--font-cabinet)'],
         satoshi: ['var(--font-satoshi)']
