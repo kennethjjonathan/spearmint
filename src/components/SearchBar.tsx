@@ -1,4 +1,5 @@
 "use client";
+import CONSTANTS from "@/constants/constants";
 import { useDebounce } from "@/hooks/useDebounce";
 import { SuggestionObject } from "@/interface/Home";
 import { handleError } from "@/lib/handleError";
@@ -7,13 +8,15 @@ import { cn } from "@/lib/utils";
 import { AuthApiError } from "@supabase/supabase-js";
 import { Eraser } from "lucide-react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import NoSuggestionFound from "./NoSuggestionFound";
+import SuggestionSkeletons from "./Skeletons/SuggestionSkeletons";
 import SuggestionTab from "./SuggestionTab";
 
 export type SearchBarProps = React.InputHTMLAttributes<HTMLInputElement> & {};
 
 const dummyData: SuggestionObject[] = [
   { title: "Tekken Lore", author: "kennethjjonathan", id: 2 },
-  { title: "Tekken Lore", author: "kennethjjonathan", id: 3 }
+  { title: "Tekken Lore", author: "kennethjjonathan", id: 3 },
 ];
 
 const SearchBar = ({ className, ...props }: SearchBarProps) => {
@@ -26,9 +29,10 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    if (/^\s+$/.test(value) || value === "") {
-      setSuggestionList([])
-    };
+    setIsSuggestLoading(true)
+    if (CONSTANTS.ONLY_WHITESPACE.test(value) || value === "") {
+      setSuggestionList([]);
+    }
     setSearchInput(value);
   }
   function handleFocus() {
@@ -39,13 +43,16 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
   }
   function handleClear() {
     setSearchInput("");
-    setSuggestionList([])
+    setSuggestionList([]);
     searchRef.current?.blur();
     setIsFocus(false);
   }
 
   const getSuggestion = useCallback(async () => {
-    if (/^\s+$/.test(searchDebounce) || searchDebounce === "") return;
+    if (CONSTANTS.ONLY_WHITESPACE.test(searchDebounce) || searchDebounce === "") {
+      setIsSuggestLoading(false)
+      return;
+    };
     try {
       setIsSuggestLoading(true);
       const { data, error } = await supabase
@@ -57,7 +64,7 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
         })
         .limit(5);
       if (error) throw error;
-      setSuggestionList(data)
+      setSuggestionList(data);
     } catch (error: unknown) {
       if (error instanceof AuthApiError) handleError(error.message);
     } finally {
@@ -105,11 +112,23 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
           </button>
         )}
       </div>
-      {searchInput.length !== 0 && isFocus && (
-        <div className="absolute top-full z-50 w-full overflow-hidden rounded-md border-0 divide-y-[1px] divide-foreground">
-          {suggestionList.map((item) => (
-            <SuggestionTab suggestionObject={item} key={item.id} />
-          ))}
+      {searchInput.length !== 0 && !CONSTANTS.ONLY_WHITESPACE.test(searchInput) && isFocus && (
+        <div className="absolute top-full z-50 w-full divide-y-[1px] divide-foreground overflow-hidden rounded-md border-0">
+          {isSuggestLoading ? (
+            <>
+              <SuggestionSkeletons />
+              <SuggestionSkeletons />
+              <SuggestionSkeletons />
+            </>
+          ) : suggestionList.length !== 0 ? (
+            <>
+              {suggestionList.map((item) => (
+                <SuggestionTab suggestionObject={item} key={item.id} />
+              ))}
+            </>
+          ) : (
+            <NoSuggestionFound/>
+          )}
         </div>
       )}
     </div>
