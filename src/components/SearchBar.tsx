@@ -1,27 +1,34 @@
 "use client";
 import { useDebounce } from "@/hooks/useDebounce";
+import { SuggestionObject } from "@/interface/Home";
 import { handleError } from "@/lib/handleError";
 import { supabase } from "@/lib/supabase";
 import { cn } from "@/lib/utils";
 import { AuthApiError } from "@supabase/supabase-js";
 import { Eraser } from "lucide-react";
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
+import SuggestionTab from "./SuggestionTab";
 
-export interface SearchBarProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+export type SearchBarProps = React.InputHTMLAttributes<HTMLInputElement> & {};
+
+const dummyData: SuggestionObject[] = [
+  { title: "Tekken Lore", author: "kennethjjonathan", id: 2 },
+  { title: "Tekken Lore", author: "kennethjjonathan", id: 3 }
+];
 
 const SearchBar = ({ className, ...props }: SearchBarProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchInput, setSearchInput] = useState<string>("");
   const [isFocus, setIsFocus] = useState<boolean>(true);
   const [isSuggestLoading, setIsSuggestLoading] = useState<boolean>(false);
-  const searchDebounce = useDebounce<string>(searchInput, 750);
+  const [suggestionList, setSuggestionList] = useState<SuggestionObject[]>([]);
+  const searchDebounce = useDebounce<string>(searchInput, 500);
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    if (/^\s+$/.test(value)) {
-      return;
-    }
+    if (/^\s+$/.test(value) || value === "") {
+      setSuggestionList([])
+    };
     setSearchInput(value);
   }
   function handleFocus() {
@@ -32,23 +39,25 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
   }
   function handleClear() {
     setSearchInput("");
+    setSuggestionList([])
     searchRef.current?.blur();
     setIsFocus(false);
   }
 
   const getSuggestion = useCallback(async () => {
-    if (/^\s+$/.test(searchDebounce) || searchDebounce.length === 0) return
+    if (/^\s+$/.test(searchDebounce) || searchDebounce === "") return;
     try {
       setIsSuggestLoading(true);
       const { data, error } = await supabase
         .from("timelines")
-        .select("title, author")
+        .select("title, author, id")
         .textSearch("title", searchDebounce, {
           type: "websearch",
-          config: "english"
-        }).limit(5);
+          config: "english",
+        })
+        .limit(5);
       if (error) throw error;
-      console.log("masuk", searchDebounce, data)
+      setSuggestionList(data)
     } catch (error: unknown) {
       if (error instanceof AuthApiError) handleError(error.message);
     } finally {
@@ -97,8 +106,10 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
         )}
       </div>
       {searchInput.length !== 0 && isFocus && (
-        <div className="absolute -bottom-full left-0 z-50 h-10 w-full rounded-md border-0 bg-accent opacity-50 duration-300 hover:opacity-100">
-          {isSuggestLoading ? "Loading" : "Data"}
+        <div className="absolute top-full z-50 w-full overflow-hidden rounded-md border-0 divide-y-[1px] divide-foreground">
+          {suggestionList.map((item) => (
+            <SuggestionTab suggestionObject={item} key={item.id} />
+          ))}
         </div>
       )}
     </div>

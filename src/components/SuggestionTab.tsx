@@ -1,7 +1,14 @@
+import { SuggestionObject } from "@/interface/Home"
 
-const SuggestionTab = () => {
+type SuggestionTabProps = {
+  suggestionObject: SuggestionObject
+}
+const SuggestionTab = ({ suggestionObject }: SuggestionTabProps) => {
   return (
-    <div>SuggestionTab</div>
+    <button className="w-full p-1 opacity-50 duration-300 hover:opacity-100 bg-accent">
+      <p className="w-full text-left text-sm lg:text-base">{suggestionObject.title}</p>
+      <p className="w-full text-left text-xs lg:text-sm">{`By ${suggestionObject.author}`}</p>
+    </button>
   )
 }
 

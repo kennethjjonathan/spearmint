@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Checkbox } from "./Checkbox";
 import { InputWithLabel, InputWithLabelProps } from "./InputWithLabel";
 
-export interface InputPasswordProps extends InputWithLabelProps {
+export type InputPasswordProps = InputWithLabelProps & {
   idForShowPassword: string;
 }
 
