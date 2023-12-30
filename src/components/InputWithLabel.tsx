@@ -30,7 +30,7 @@ const InputWithLabel = React.forwardRef<HTMLInputElement, InputWithLabelProps>(
             type={type}
             placeholder=""
             className={cn(
-              "peer block w-full appearance-none border-0 border-b-2 border-accent bg-transparent px-0 py-1 text-foreground outline-none ring-0 duration-300 focus:border-white",
+              "peer block w-full appearance-none border-0 border-b-2 border-accent bg-transparent px-0 py-1 text-foreground outline-none ring-0 duration-300 focus:border-foreground",
               className,
             )}
             required={required}

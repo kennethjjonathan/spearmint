@@ -14,11 +14,6 @@ import SuggestionTab from "./SuggestionTab";
 
 export type SearchBarProps = React.InputHTMLAttributes<HTMLInputElement> & {};
 
-const dummyData: SuggestionObject[] = [
-  { title: "Tekken Lore", author: "kennethjjonathan", id: 2 },
-  { title: "Tekken Lore", author: "kennethjjonathan", id: 3 },
-];
-
 const SearchBar = ({ className, ...props }: SearchBarProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const [searchInput, setSearchInput] = useState<string>("");
@@ -29,7 +24,7 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    setIsSuggestLoading(true)
+    setIsSuggestLoading(true);
     if (CONSTANTS.ONLY_WHITESPACE.test(value) || value === "") {
       setSuggestionList([]);
     }
@@ -49,10 +44,13 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
   }
 
   const getSuggestion = useCallback(async () => {
-    if (CONSTANTS.ONLY_WHITESPACE.test(searchDebounce) || searchDebounce === "") {
-      setIsSuggestLoading(false)
+    if (
+      CONSTANTS.ONLY_WHITESPACE.test(searchDebounce) ||
+      searchDebounce === ""
+    ) {
+      setIsSuggestLoading(false);
       return;
-    };
+    }
     try {
       setIsSuggestLoading(true);
       const { data, error } = await supabase
@@ -101,7 +99,7 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
         />
         {(searchInput.length !== 0 || isFocus) && (
           <button
-            className="absolute inset-y-0 right-2 text-accent duration-300 hover:text-foreground"
+            className="absolute inset-y-0 right-2 text-accent duration-300 lg:hover:text-foreground"
             onClick={handleClear}
           >
             <Eraser
@@ -112,25 +110,27 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
           </button>
         )}
       </div>
-      {searchInput.length !== 0 && !CONSTANTS.ONLY_WHITESPACE.test(searchInput) && isFocus && (
-        <div className="absolute top-full z-50 w-full divide-y-[1px] divide-foreground overflow-hidden rounded-md border-0">
-          {isSuggestLoading ? (
-            <>
-              <SuggestionSkeletons />
-              <SuggestionSkeletons />
-              <SuggestionSkeletons />
-            </>
-          ) : suggestionList.length !== 0 ? (
-            <>
-              {suggestionList.map((item) => (
-                <SuggestionTab suggestionObject={item} key={item.id} />
-              ))}
-            </>
-          ) : (
-            <NoSuggestionFound/>
-          )}
-        </div>
-      )}
+      {searchInput.length !== 0 &&
+        !CONSTANTS.ONLY_WHITESPACE.test(searchInput) &&
+        isFocus && (
+          <div className="absolute left-0 top-full z-50 w-full space-y-1">
+            {isSuggestLoading ? (
+              <>
+                <SuggestionSkeletons />
+                <SuggestionSkeletons />
+                <SuggestionSkeletons />
+              </>
+            ) : suggestionList.length !== 0 ? (
+              <>
+                {suggestionList.map((item) => (
+                  <SuggestionTab suggestionObject={item} key={item.id} />
+                ))}
+              </>
+            ) : (
+              <NoSuggestionFound />
+            )}
+          </div>
+        )}
     </div>
   );
 };

@@ -2,10 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-/* * {
-  border: 1px solid red;
-} */
+:root {
+  --primary-color: rgba(52, 52, 52);
+  --foreground-color: rgba(243, 243, 243);
+  --accent-color: rgba(142, 139, 130);
+  --destructive-color: rgba(239, 68, 68);
+}
 
 body {
-  background-color: black;
+  background-color: var(--primary-color);
 }

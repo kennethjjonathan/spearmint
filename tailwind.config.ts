@@ -40,10 +40,10 @@ const config: Config = {
         satoshi: ['var(--font-satoshi)']
       },
       colors: {
-        primary: "#000000",
-        foreground: "#ffffff",
-        accent: "#606060",
-        destructive: "#ef4444",
+        primary: "var(--primary-color)",
+        foreground: "var(--foreground-color)",
+        accent: "var(--accent-color)",
+        destructive: "var(--destructive-color)",
       },
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
