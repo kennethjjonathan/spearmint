@@ -51,7 +51,6 @@ const SignUpPage = () => {
       if (error) throw error;
       setIsEmailSent(true);
     } catch (error: unknown) {
-      console.error(error)
       if (error instanceof AuthApiError) handleError(error.message);
     }
   };
