@@ -24,7 +24,7 @@ const SearchBar = ({ className, ...props }: SearchBarProps) => {
 
   function handleSearchInput(e: ChangeEvent<HTMLInputElement>) {
     const { value } = e.target;
-    setIsSuggestLoading(true);
+    if (!isSuggestLoading) setIsSuggestLoading(true);
     if (CONSTANTS.ONLY_WHITESPACE.test(value) || value === "") {
       setSuggestionList([]);
     }
