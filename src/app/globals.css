@@ -3,9 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: rgba(52, 52, 52);
-  --foreground-color: rgba(243, 243, 243);
-  --accent-color: rgba(142, 139, 130);
+  --primary-color: rgba(33, 37, 41);
+  --foreground-color: rgba(222, 226, 230);
+  --accent-color: rgba(108, 117, 124);
   --destructive-color: rgba(239, 68, 68);
 }
 

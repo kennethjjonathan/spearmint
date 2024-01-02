@@ -3,7 +3,7 @@ import CONSTANTS from "@/constants/constants";
 import { useDebounce } from "@/hooks/useDebounce";
 import { SuggestionObject } from "@/interface/Home";
 import { handleError } from "@/lib/handleError";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-client/supabase";
 import { cn } from "@/lib/utils";
 import { AuthApiError } from "@supabase/supabase-js";
 import { Eraser } from "lucide-react";

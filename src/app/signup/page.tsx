@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { InputWithLabel } from "@/components/InputWithLabel";
 import { handleError } from "@/lib/handleError";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-client/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthApiError } from "@supabase/supabase-js";
 import Link from "next/link";

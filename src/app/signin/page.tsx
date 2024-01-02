@@ -3,7 +3,7 @@ import { Button } from "@/components/Button";
 import InputPassword from "@/components/InputPassword";
 import { InputWithLabel } from "@/components/InputWithLabel";
 import { handleError } from "@/lib/handleError";
-import { supabase } from "@/lib/supabase";
+import { supabase } from "@/lib/supabase-client/supabase";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AuthApiError } from '@supabase/supabase-js';
 import Link from "next/link";
@@ -41,7 +41,7 @@ const SignInPage = () => {
           Don&apos;t have an account?{" "}
           <Link
             href={"/signup"}
-            className="border-0 border-b-2 border-accent pb-1 text-foreground duration-300 hover:border-foreground"
+            className="border-0 border-b-2 border-accent pb-1 text-foreground duration-300 lg:hover:border-foreground"
           >
             Sign Up
           </Link>
